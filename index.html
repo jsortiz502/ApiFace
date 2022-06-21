@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="main.css">
+    <script src="https://unpkg.com/vue@3"></script>
+    <title>API de Facebook</title>
+
+
+</head>
+<body>
+    <div id="app">
+        <!-- <div class="favorites">
+            <div class="favorite" v-for="lista in allFavoritos">
+                <a @click.prevent="mostrarFavorito(lista)"href="">
+                    <img v-bind:src="lista.avatar_url" :alt="lista.login" class="favorite__avatar">
+                </a>
+            </div>
+        </div> -->
+
+        <!-- Content -->
+        <article class="content">
+            <h1 class="content__title">Buscar usuario de Facebook</h1>
+            <!-- Search -->
+            <form class="search" v-on:submit.prevent="Buscar">
+                <input type="text" v-model="busqueda" class="search__input" required placeholder="Escriba el nombre del usuario">
+                <b><input type="submit" class="search__submit" value="Buscar"></b>
+            </form>
+
+            <!-- Resultado -->
+            <div class="result" v-if="resultado">               
+                <h2 class="result__name">{{resultado.name}}</h2>
+                <h2 class="result__email">{{resultado.email}}</h2> 
+                <h2 class="result_gender">{{resultado.gender}}</h2>   
+                <!-- <h2>{{resultado.name}}</h2> -->
+                <img v-bind:src="resultado.picture.data.url"class="result__avatar" alt="">              
+                <p class="result__bio">
+                  
+                    <!-- <center><a :href="resultado.html_url" class="result__blog" target="_blank">Perfil del usuario</a></center> -->
+
+                    <!-- <center><a href="" class="result__toggle-favorite" @click.prevent="addFavorito"><img src="icono estrella.png" height="20" width="20">Añadir favoritos</a></center> -->
+                    <!-- <center><a href="" v-if="favoritos.has(resultado.id)" class="result__remove" @click.prevent="removeFavorito"><img src="eliminar.png" height="20" width="20">Eliminar favoritos</a></center> -->
+                    
+                    <!-- El @ remplaza las directivvas con los 2 puntos -->
+            </div>
+            <!-- <b v-else>Esperando el resultado.....</b> -->
+            <!-- Error -->
+            <!-- <div class="result__error" v-show="fail">ERROR</div> -->
+        </article>
+    </div>
+    <script src="main.js"></script>
+    <script>
+        const AppMontada = app.mount('#app') 
+    </script>
+</body>
+
+</html>
