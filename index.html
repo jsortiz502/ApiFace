@@ -4,51 +4,70 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet"> -->
-    <link rel="stylesheet" href="main.css">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oxygen&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">    <!-- <link rel="stylesheet" href="main.css"> -->
     <script src="https://unpkg.com/vue@3"></script>
     <title>API de Facebook</title>
 
-
+    <style>
+        body{
+            background: grey;
+            font-family: 'Oxygen', sans-serif;
+        }
+    </style>
 </head>
-<body>
+
+<body class="h-screen bg-gray-100">
     <div id="app">
-        <!-- <div class="favorites">
-            <div class="favorite" v-for="lista in allFavoritos">
-                <a @click.prevent="mostrarFavorito(lista)"href="">
-                    <img v-bind:src="lista.avatar_url" :alt="lista.login" class="favorite__avatar">
+        <div class="favorites">
+            <div class="favorite" v-for="lista in allFavoritos">              
+                <a  @click.prevent="mostrarFavorito(lista)"href="">              
+                    <img v-bind:src="lista.picture.data.url" :alt="lista.login" class="favorite__avatar">
                 </a>
             </div>
-        </div> -->
+        </div>
 
         <!-- Content -->
-        <article class="content">
-            <h1 class="content__title">Buscar usuario de Facebook</h1>
-            <!-- Search -->
-            <form class="search" v-on:submit.prevent="Buscar">
-                <input type="text" v-model="busqueda" class="search__input" required placeholder="Escriba el nombre del usuario">
-                <b><input type="submit" class="search__submit" value="Buscar"></b>
-            </form>
-
-            <!-- Resultado -->
-            <div class="result" v-if="resultado">               
-                <h2 class="result__name">{{resultado.name}}</h2>
-                <h2 class="result__email">{{resultado.email}}</h2> 
-                <h2 class="result_gender">{{resultado.gender}}</h2>   
-                <!-- <h2>{{resultado.name}}</h2> -->
-                <img v-bind:src="resultado.picture.data.url"class="result__avatar" alt="">              
-                <p class="result__bio">
-                  
-                    <!-- <center><a :href="resultado.html_url" class="result__blog" target="_blank">Perfil del usuario</a></center> -->
-
-                    <!-- <center><a href="" class="result__toggle-favorite" @click.prevent="addFavorito"><img src="icono estrella.png" height="20" width="20">Añadir favoritos</a></center> -->
-                    <!-- <center><a href="" v-if="favoritos.has(resultado.id)" class="result__remove" @click.prevent="removeFavorito"><img src="eliminar.png" height="20" width="20">Eliminar favoritos</a></center> -->
-                    
-                    <!-- El @ remplaza las directivvas con los 2 puntos -->
+        <article class="container px-5 py-24 mx-auto">
+            <div>
+                <center><h1 class="text-4xl md:text-7xl text-blue-700 font-semibold" style="text-shadow: 3px 3px 2px black; border-bottom: 2px solid black;">Buscar usuario de Facebook</h1></center>
+                <br>
+                <!-- Search -->
+                <form class="search" v-on:submit.prevent="Buscar">
+                    <center><input type="text" v-model="busqueda" class="search__input" style="margin-bottom: 10px; border: 2px solid rgb(0, 0, 0);" required placeholder="Escriba el ID del usuario"></center>
+                    <center><b><input type="submit" class="search__submit" style="background: gray;border: 2px solid black;" value="Buscar"></b></center>
+                    <br>
+                </form>
             </div>
-            <!-- <b v-else>Esperando el resultado.....</b> -->
-            <!-- Error -->
-            <!-- <div class="result__error" v-show="fail">ERROR</div> -->
+            <!-- Resultado -->
+            <div class="flex flex-col justify-center items-center">
+                <div class="p-4 sm:w-1/2 lg:w-1/3">
+                    <div class="h-full border-5 border-gray-300 border-opacity-60 rounded-lg overflow-hidden">
+                        <div class="p-9 hover:bg-indigo-700 hover:text-white transition duration-300 ease-in">
+                            <div class="result" v-if="resultado">
+                                <img v-bind:src="resultado.picture.data.url"class="lg:h-72 md:h-50 w-full object-cover object-center" style="margin: auto;"alt="">               
+                                <center><h1 class="text-2xl font-semibold mb-3">{{resultado.name}}</h1></center>
+                                <h2 class="result__email">{{resultado.email}}</h2> 
+                                <h2 class="result_gender">{{resultado.gender}}</h2>   
+                                <!-- <h2>{{resultado.name}}</h2> -->
+                                    <div class="flex items-center flex-wrap">
+                                        <a href="" v-if="resultado.id"class="text-indigo-200 inline-flex items-center md:mb-10 lg:mb-0" style="position: absolute; margin-left: 82px; margin-top: 9px; color: black;" @click.prevent="addFavorito"><img src="icono estrella.png" height="40" width="20">Añadir favoritos</a>                  
+                                    </div>
+                                    <br>
+                                    <div>
+                                        <a href="" v-if="favoritos.has(resultado.id)" class="text-indigo-200 inline-flex items-center md:mb-10 lg:mb-0" style="position: absolute; margin-left: 82px; margin-top: 1px; color: black;" @click.prevent="removeFavorito"><img src="eli.png" height="40" width="20">Eliminar favoritos</a>
+                                    </div>
+                                    <!-- El @ remplaza las directivvas con los 2 puntos -->
+                            </div>
+                            <!-- <b v-else>Esperando el resultado.....</b> -->
+                            <!-- Error -->
+                            <center><div class="text-base font-family text-indigo-900 mb-1" style="color: black;" v-show="fail">ERROR</div></center>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </article>
     </div>
     <script src="main.js"></script>
